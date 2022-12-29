@@ -1,0 +1,77 @@
+HELP.md
+.gradle
+node_modules
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+.metadata
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+### macOS Patch ###
+# iCloud generated files
+*.icloud
+
+### VS Code ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+## oracle connect info
+/src/main/java/ubc/cpsc304/database/ConnectionConst.java
+/src/main/resources/application.properties
+/src/test/resources/application.properties
+
+### FRONTEND ####
+/frontend/data
+/frontend/database/data
+/frontend/.npm
+/frontend/.eslintcache
+/frontend/.cache/
+/frontend/node_modules
+/frontend/build
+/frontend/.env
+
+
+
+### TEMP
+application.yml
+/frontend/trails/practice.html
+.temp/
