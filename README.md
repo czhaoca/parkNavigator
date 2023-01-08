@@ -1,6 +1,9 @@
 ## parkNavigator
 - Explore parks and trails 
 
+![parkNavigator](https://user-images.githubusercontent.com/67996710/211192341-19aa1bbc-c534-471e-afb8-d81b43403de9.gif)
+
+
 ### Quick Start
 - git clone:
   ```bash
