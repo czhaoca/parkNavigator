@@ -10,8 +10,14 @@
   ```bash
   $ gradle clean build
   ```
-- start the backend server
-  run TrailsApplication.java
+
+- env setup
+  1. set application.properties file in src/main/resources
+  2. set ConnectionConst.java file in src/main/java/parkNavigator/database
+
+- start the backend server <br/>
+  run TrailsApplication.java <br/>
+  <br />
 
 ## Features
 ### DB Modeling
