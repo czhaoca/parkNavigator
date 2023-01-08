@@ -24,7 +24,7 @@ function Reservation({ openModal, setModal, setContents, program }) {
 
   const addReservationApi = async () => {
     await axios
-      .post(`${BASE_URL}/reservation/save`, request)
+      .post(`${BASE_URL}/reservation`, request)
       .then(response => {
         setReservationNumber(response.data);
         setReserved(true);

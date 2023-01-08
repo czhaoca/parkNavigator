@@ -31,7 +31,29 @@ function ParksAll() {
       .then(response => {
         setParks(response.data);
         firstFilterApi();
-        setCount(response.data?.length);
+        if ((firstFilter === 'init') | (firstFilter === '------')) {
+          setCount(response.data?.length);
+        } else {
+          countGetter();
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const countGetter = async () => {
+    await axios
+      .get(
+        `${BASE_URL}/parks/filter/count?firstFilter=${firstFilter}&secondFilter=${secondFilter}`,
+        {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then(response => {
+        setCount(response.data);
       })
       .catch(error => {
         console.log(error);

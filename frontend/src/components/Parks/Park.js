@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPersonHiking, faMountain } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import ParkImage from './ParkImage';
 import axios from 'axios';
 import BASE_URL from '../../config';
+import { filterOne } from '../../context/ParkContext';
+
 function Park(props) {
   const { park } = props;
   const [provinceName, setProvinceName] = useState();
   const [countryName, setCountryName] = useState();
+  const { firstFilter, setFirstFilter } = useContext(filterOne);
   const [provinceCount, setProvinceCount] = useState({ BC: 0 });
 
   const provinceGetter = async () => {
@@ -51,7 +54,6 @@ function Park(props) {
       })
       .then(response => {
         setProvinceCount(response.data);
-        console.log(response.data);
         countryGetter();
       })
       .catch(e => console.log(e));

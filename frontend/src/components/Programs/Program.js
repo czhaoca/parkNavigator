@@ -34,7 +34,7 @@ function Program(props) {
 
   const deleteProgramApi = async () => {
     await axios
-      .put(`${BASE_URL}/programs/delete/${program.id}`)
+      .delete(`${BASE_URL}/programs/${program.id}`)
       .then(response => {
         setMsg('Program has been deleted');
         setDeleteItem(false);

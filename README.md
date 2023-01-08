@@ -1,7 +1,20 @@
 ## parkNavigator
 - Explore parks and trails 
 
-## DB Modeling
+### Quick Start
+- git clone:
+  ```bash
+  $ git clone http://github.com/jieunkxx/parkNavigator.git
+  ```
+- Install dependencies & build:
+  ```bash
+  $ gradle clean build
+  ```
+- start the backend server
+  run TrailsApplication.java
+
+## Features
+### DB Modeling
 ![parkNavigator_dbModeling](https://user-images.githubusercontent.com/67996710/210013652-34514d68-3b35-46d3-9809-c17ce30893df.png)
 
 <br/>

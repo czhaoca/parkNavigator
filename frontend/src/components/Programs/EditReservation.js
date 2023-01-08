@@ -15,7 +15,7 @@ import BASE_URL from '../../config';
 import { currDate } from '../../utils/updateCurr';
 import { ParkIdContext } from '../../App';
 import ProgramsIterator from './ProgramsIterator';
-import ReservationIterator from './ReservationIterator';
+import ReservedProgramsIterator from './ReservedProgramsIterator';
 
 function Reservation({ openModal, setModal }) {
   const [reservationNumber, setReservationNumber] = useState('');
@@ -33,6 +33,8 @@ function Reservation({ openModal, setModal }) {
   const [programName, setProgramName] = useState('');
   const [isReservationNumValid, setReservationNumberValidity] = useState(false);
   const [isEmailValid, setEmailValidity] = useState(false);
+  const [programListFound, setProgramListFound] = useState(false);
+  const [programList, setProgramList] = useState([]);
   const [updateRequestObj, setUpdateRequestObj] = useState({});
   const [editedMsg, setEditedMsg] = useState('');
   const [deletedMsg, setDeletedMsg] = useState('');
@@ -48,8 +50,11 @@ function Reservation({ openModal, setModal }) {
   }, [email, ppl, programId, reservationNumber]);
 
   useEffect(() => {
-    if (isReservationNumValid || isEmailValid) {
+    if (isReservationNumValid) {
       searchReservationApi();
+    }
+    if (isEmailValid) {
+      searchReservationByEmailApi();
     }
   }, [cond]);
 
@@ -58,7 +63,7 @@ function Reservation({ openModal, setModal }) {
   }, [reservation, email]);
 
   const searchReservationApi = async () => {
-    const url = `${BASE_URL}/reservation/find${cond}`;
+    const url = `${BASE_URL}/reservation${cond}`;
     await axios
       .get(url)
       .then(response => {
@@ -77,9 +82,25 @@ function Reservation({ openModal, setModal }) {
       });
   };
 
+  const searchReservationByEmailApi = async () => {
+    const url = `${BASE_URL}/reservation/${cond}`;
+    await axios
+      .get(url)
+      .then(response => {
+        setProgramList(response.data);
+        setFound(true);
+        setProgramListFound(true);
+      })
+      .catch(error => {
+        if (error.status === 'ERR_BAD_REQUEST') {
+          setProgramList([]);
+        }
+      });
+  };
+
   const updateReservationApi = async () => {
     await axios
-      .patch(`${BASE_URL}/reservation/update`, updateRequestObj)
+      .patch(`${BASE_URL}/reservation`, updateRequestObj)
       .then(response => {
         setReservation(response.data);
         setEditedMsg('updated');
@@ -126,12 +147,10 @@ function Reservation({ openModal, setModal }) {
   };
 
   const onSearchHandler = async () => {
-    console.log('searchhandler');
     if (isReservationNumValid) {
       setCond(`?reservationNumber=${reservationNumber}`);
     } else if (isEmailValid) {
-      console.log('searchhandler emails');
-      setCond(`?email=${email}`);
+      setCond(`${email}`);
     }
   };
 
@@ -181,6 +200,9 @@ function Reservation({ openModal, setModal }) {
             <Close
               onClick={() => {
                 setModal(false);
+                setProgramListFound(false);
+                setEdited(false);
+                setFound(false);
               }}
             >
               <CloseIcon />
@@ -191,24 +213,26 @@ function Reservation({ openModal, setModal }) {
           ) : (
             <InnerBox>
               <Section>{date}</Section>
+              {!programListFound && (
+                <Section>
+                  <SocialLine />
+                  <Title>Search by Reservation Number</Title>
+                  <EditContainer>
+                    <EditInput
+                      type="text"
+                      value={reservationNumber}
+                      placeholder={reservationNumber}
+                      pattern="^\d{7}$"
+                      maxLegnth="7"
+                      autoComplete="cc-number"
+                      onChange={onReservationNumberHandler}
+                    />
+                  </EditContainer>
+                </Section>
+              )}
               <Section>
                 <SocialLine />
-                <Title># Reservation Number</Title>
-                <EditContainer>
-                  <EditInput
-                    type="text"
-                    value={reservationNumber}
-                    placeholder={reservationNumber}
-                    pattern="^\d{7}$"
-                    maxLegnth="7"
-                    autoComplete="cc-number"
-                    onChange={onReservationNumberHandler}
-                  />
-                </EditContainer>
-              </Section>
-              <Section>
-                <SocialLine />
-                <Title>Email</Title>
+                <Title>Search Reserved Programs By Email</Title>
                 <EditContainer>
                   <EditInput
                     type="content"
@@ -217,7 +241,7 @@ function Reservation({ openModal, setModal }) {
                   />
                 </EditContainer>
               </Section>
-              {found && reservations.length === 1 ? (
+              {found && !programListFound ? (
                 <>
                   <Section>
                     <SocialLine />
@@ -241,10 +265,10 @@ function Reservation({ openModal, setModal }) {
                     </EditContainer>
                   </Section>
                 </>
-              ) : reservations.length > 1 ? (
-                <ReservationIterator reservations={reservations} />
               ) : (
-                <></>
+                programListFound && (
+                  <ReservedProgramsIterator programList={programList} />
+                )
               )}
               <Section>
                 <SocialLine />

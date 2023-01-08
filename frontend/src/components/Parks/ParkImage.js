@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import BASE_URL from '../../config';
 import styled from 'styled-components';
-// import 'react-slideshow-image/dist/styles.css';
-// import { Slide } from 'react-slideshow-image';
 
 function ParkImage(props) {
   const { parkId } = props;
