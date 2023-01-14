@@ -55,7 +55,7 @@ public class ProgramReservationController {
     return result;
   }
 
-  @PutMapping("delete/{reservationNumber}")
+  @DeleteMapping("{reservationNumber}")
   public String deleteReservation(@PathVariable String reservationNumber) {
     return programReservationService.delete(reservationNumber);
   }

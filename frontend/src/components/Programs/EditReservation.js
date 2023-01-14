@@ -113,7 +113,7 @@ function Reservation({ openModal, setModal }) {
 
   const deleteReservationApi = async () => {
     await axios
-      .put(`${BASE_URL}/reservation/delete/${reservationNumber}`)
+      .delete(`${BASE_URL}/reservation/${reservationNumber}`)
       .then(response => {
         setEditedMsg('Your reservation has been Canceled');
         setEdited(true);
