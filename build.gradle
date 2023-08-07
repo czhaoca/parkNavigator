@@ -4,6 +4,17 @@ plugins {
 	id 'java'
 }
 
+plugins {
+  id "org.sonarqube" version "4.2.1.3168"
+}
+
+sonar {
+  properties {
+    property "sonar.projectKey", "jkparking"
+    property "sonar.projectName", "jkparking"
+  }
+}
+
 group = 'ubc'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
